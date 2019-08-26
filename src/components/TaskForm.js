@@ -6,8 +6,37 @@ class TaskForm extends React.Component {
         super(props);
 
         this.state = {
+            id: '',
             name : '',
             status: false
+        }
+    }
+
+    componentWillMount(){
+        if(this.props.taskEditing){
+            this.setState({
+                id: this.props.taskEditing.id,
+                name: this.props.taskEditing.name,
+                status: this.props.taskEditing.status,
+            })
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps && nextProps.taskEditing){
+            this.setState({
+                id: nextProps.taskEditing.id,
+                name: nextProps.taskEditing.name,
+                status: nextProps.taskEditing.status,
+            })
+        }
+        
+        if(!nextProps.taskEditing){
+            this.setState({
+                id: '',
+                name : '',
+                status: false
+            })
         }
     }
         
@@ -30,6 +59,7 @@ class TaskForm extends React.Component {
     onHandleSubmit = (event) => {
         event.preventDefault();
         this.props.onSubmit(this.state);
+        this.onClear();
     }
 
     onClear = () => {
@@ -40,11 +70,12 @@ class TaskForm extends React.Component {
     }
 
     render() {
+        var {id} = this.state;
 
         return (
             <div className="card">
                 <div className="card-header">
-                    <span>Task Form</span>
+                    <span>{id ? 'Update Task': 'Add new task'}</span>
 
                     <button style={{float : "right"}} onClick={this.onCloseForm}>
                         <i className="fas fa-times-circle"></i>

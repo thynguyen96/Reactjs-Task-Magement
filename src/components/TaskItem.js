@@ -1,21 +1,18 @@
 import React from 'react'
-import TaskList from './TaskList';
-
 class TaskItem extends React.Component {
-
-    // constructor(props) {
-    //     super(props);
-    // }
 
     onUpdateStatus = () => {
         this.props.onUpdateStatus(this.props.task.id);
     }
+    onDelete = () => {
+        this.props.onDelete(this.props.task.id);
+    }
+    onUpdate = () => {
+        this.props.onUpdate(this.props.task.id);
+    }
 
     render() {
         var {task, index} = this.props;
-
-        
-        
         return (
             <tr>
                 <th scope="row">{index + 1}</th>
@@ -27,8 +24,8 @@ class TaskItem extends React.Component {
                 </td>
                 <td>
                     <div className="text-center">
-                        <button type="submit" className="btn btn-primary mr-2">Delete</button>
-                        <button type="submit" className="btn btn-primary">Edit</button>
+                        <button type="button" className="btn btn-primary mr-2" onClick={this.onDelete}>Delete</button>
+                        <button type="button" className="btn btn-primary" onClick={this.onUpdate}>Edit</button>
                     </div>
                 </td>
             </tr>
